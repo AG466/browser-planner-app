@@ -27,7 +27,7 @@ function updateTime() {
 
 clock = setInterval(updateTime,1000);
 
-for(let i = 6; i < 25;i++){
+for(let i = 6; i < 24;i++){
     let blockEl = $("<div><div>");
     blockEl.addClass("row justify-content-center");
     blockEl.attr("id: time-block");
@@ -47,31 +47,32 @@ for(let i = 6; i < 25;i++){
     textEl.addClass("col-10 description");
     // textEl.attr("style", "arrange- 10px");
     
-    if(currentHour > i){
-        textEl.attr("style", "background-color: grey")
-        }else if(currentHour === i){
-            textEl.attr("style", "background-color: green") 
   
-        }else{
-            textEl.attr("style", "background-color: red");
-        }
-    
-
     let textArea = $("<textarea></textarea>");
-    textArea.attr("style", "width:100%");
+    textArea.attr("style", "width:100%", "padding: 23px");
     textArea.addClass("textarea");
     textArea.attr("data-index", i);
+    textArea.css({
+        "padding" : "23px"
+    }
+    );
     console.log(textArea);
     textArea.val(localStorage.getItem(i));
-    
+
+
+
+
     let saveField = $("<div></div>");
     saveField.addClass("col-1 saveBtn");
 
     let saveIcon = $("<i></i>");
     saveIcon.addClass("fas fa-save text-center");
     saveField.addClass("text-center");
-  
-    
+    saveField.css({
+        "padding": "30px",
+        "background-color" : "black"
+
+    });   
     saveField.attr("data-reference", i);
     
     saveField.on( "click", function() {
@@ -79,7 +80,54 @@ for(let i = 6; i < 25;i++){
         localStorage.setItem(key, textArea.val());
     });
 
+    if(currentHour > i){
         
+        textEl.css({
+            "background-color" : "grey",
+            "opacity" : "0.4",   
+        }) 
+
+        textArea.attr("disabled", "disabled");
+
+        textArea.css({
+               
+            "color" : "Red",
+            "font-size" : "20px",
+            "font-weight" : "bold",
+
+            });
+
+        }else if(currentHour === i){
+            textEl.css({
+                "background-color" : "yellow",
+                "opacity" : "0.7",
+                "color" : "black",
+            })
+
+            textArea.css({
+               
+            "color" : "black",
+            "font-size" : "20px",
+            "font-weight" : "bold",
+
+            })      
+  
+        }else{
+            textEl.css({
+                "background-color" : "navy",
+                "opacity" : "0.6"
+            }) 
+            
+            textArea.css({
+               
+                "color" : "white",
+                "font-size" : "20px",
+                "font-weight" : "bold",
+    
+                })     
+        }
+    
+
     
 
     
