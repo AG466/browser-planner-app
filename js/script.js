@@ -1,15 +1,6 @@
-// display current date and time in html
-
-// create a sortable list with editable items
-
-// Display the current day at the top of the calendar when a user opens the planner.
-// Present timeblocks for standard business hours when the user scrolls down.
-// Color-code each timeblock based on past, present, and future when the timeblock is viewed.
-// Allow a user to enter an event when they click a timeblock.
-// Save the event in local storage when the save button is clicked in that timeblock.
-// Persist events between refreshes of a page.
-
-// clock
+// create an object which holds the time to be displayed for each of the hour blocks
+// The object needs to have a boolean variable which can store if any object is complete or not
+// the object needs to be passed and retrieved from local storage
 
 
 var rootEl = $('#root');
@@ -45,11 +36,17 @@ for(let i = 6; i < 24;i++){
 
     let textEl = $("<div></div>");
     textEl.addClass("col-10 description");
+    textEl.css({
+        // "justify-content" : "center",
+        "display": "flex",
+        "align-items": "center"
+    }
+    );
     // textEl.attr("style", "arrange- 10px");
     
   
     let textArea = $("<textarea></textarea>");
-    textArea.attr("style", "width:100%", "padding: 23px");
+    textArea.attr("style", "width:80%", "padding: 23px");
     textArea.addClass("textarea");
     textArea.attr("data-index", i);
     textArea.css({
@@ -80,11 +77,20 @@ for(let i = 6; i < 24;i++){
         localStorage.setItem(key, textArea.val());
     });
 
+
+    function updateTime() {
+        timeEl.text(dayjs());
+        console.log(dayjs());
+    };
+    
+
+
+
+
     if(currentHour > i){
         
         textEl.css({
             "background-color" : "grey",
-            "opacity" : "0.4",   
         }) 
 
         textArea.attr("disabled", "disabled");
@@ -100,7 +106,6 @@ for(let i = 6; i < 24;i++){
         }else if(currentHour === i){
             textEl.css({
                 "background-color" : "yellow",
-                "opacity" : "0.7",
                 "color" : "black",
             })
 
@@ -114,8 +119,7 @@ for(let i = 6; i < 24;i++){
   
         }else{
             textEl.css({
-                "background-color" : "navy",
-                "opacity" : "0.6"
+                "background-color" : "navy"
             }) 
             
             textArea.css({
@@ -127,21 +131,41 @@ for(let i = 6; i < 24;i++){
                 })     
         }
     
+    let taskCompleteButton = $("<button>Mark Complete</button>");
+    taskCompleteButton.addClass("btn btn-success");
+    
+    //if clicked then toggles the text in text area to line through and appends a checkmark to the text area
+    let taskIncompleteButton = $("<button>Mark Incomplete</button>");
+    taskIncompleteButton.addClass("btn btn-danger");
+    // if clicked then toggles the text in text area to italic and append a red x to the text area
+    taskCompleteButton.on("click", function(){
+        textArea.css({
+            "text-decoration" : "line-through"
+        })
+    });
+
+    taskIncompleteButton.on("click", function(){
+        textArea.css({
+            "text-decoration" : "none"
+        });
+    
+        
+    });
 
     
-
-    
-
     $(textEl).append(textArea);
     
     $(blockEl).append(hourEl);
     
     $(blockEl).append(textEl);
     
+    $(textEl).append(taskCompleteButton);
+    $(textEl).append(taskIncompleteButton);
     $("body").append(blockEl);
     
     $(saveField).append(saveIcon);
     $(blockEl).append(saveField);
     
 };
+
 
