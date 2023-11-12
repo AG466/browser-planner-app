@@ -16,3 +16,14 @@ This project is deployed via github pages. You can access it [here]
 * Save the event in local storage when the save button is clicked in that timeblock.
 
 * Persist events between refreshes of a page
+
+To do -
+
+1. Enable the retrieval of object items from local storage and display them in the time blocks.
+
+2. Set the complete incomplete variables to retain formatting when browser is refreshed.
+
+3. Review and alter color shcemes for intuitive UX.
+
+
+
